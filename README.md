@@ -1,7 +1,7 @@
 # Soccer Simulator
 #### Video Demo: https://youtu.be/VHRviS98P4Q
 
-## Description:
+## Description
 This is a web-based application using JavaScript, Python, SQL, HTML, CSS, and Jinja to simulate soccer matches. 
 
 The user can choose between European, Brazilian, and International teams, simulate tournaments, and analyze the results. The user can also create their own teams and simulate matches between them.
@@ -18,7 +18,7 @@ Then, run the application:
 ```bash
   flask run
 ```
-## Code Description:
+## Code Description
 
 I'm using SQLite3, a lightweight and versatile database management system, to store teams name, ratings, color and others.
 
