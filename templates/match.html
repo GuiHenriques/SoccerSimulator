@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+Match Statistics
+{% endblock %}
+
+{% block main %}
+    <div class="header">
+        Statistics
+    </div>
+    <table class="table table-lg table-borderless mx-auto m-5" style="table-layout:fixed;">
+    <tbody>
+        <tr>
+            <th style="color: {{stats.color1}}; font-size: 30px">{{stats.team1}}</th>
+            <th></th>
+            <th style="color: {{stats.color2}}; font-size: 30px">{{stats.team2}}</th>
+        </tr>
+        <tr>
+            <td><span class="logo1-sm" style="background-color:{{stats.color1}}"></span></td>
+            <th></th>
+            <td><span class="logo2-sm" style="background-color:{{stats.color2}}"></span></td>
+        </tr>
+        <tr>
+             <td >{{stats.percent1}}%</td>
+             <th>Win Probability</td>
+             <td>{{stats.percent2}}%</td>
+         </tr>
+         <tr>
+             <td>{{stats.goals1}}</td>
+             <th>Shots on target</th>
+             <td>{{stats.goals2}}</td>
+         </tr>
+         <tr>
+             <td>{{stats.posse1}}%</td>
+             <th>Possession</th>
+             <td>{{stats.posse2}}%</td>
+         </tr>
+         <tr>
+             <td>{{stats.pass1}}%</td>
+             <th>Pass Accuracy</th>
+             <td>{{stats.pass2}}%</td>
+         </tr>
+         <tr>
+             <td>{{stats.cards1}}</td>
+             <th>Yellow Cards</th>
+             <td>{{stats.cards2}}</td>
+         </tr>
+        </tbody>
+    </table>
+
+    <form action="/" method="post">
+        <button class="btn btn-dark m-1">New Simulation</button>
+    </form>
+
+    <script>
+        $("tr").addClass("section");
+        $("td").css("font-weight", "bold")
+    </script>
+{% endblock %}
+

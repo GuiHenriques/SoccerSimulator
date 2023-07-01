@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Team
+{% endblock %}
+
+{% block main %}
+    <div class="header">
+        Create Team
+    </div>
+    <form action="/create" method="post">
+            <input autofocus autocomplete="off" class="form-control mx-auto w-auto mt-5" name="cteam" placeholder="Team Name" required type="text">
+            <p class="pb-2">Insert Team Name</p>
+            <input autofocus autocomplete="off" class="form-control mx-auto w-auto" name="crating" placeholder="Team Rating" required type="number">
+            <p class="pb-2">Insert a number from 0 to 100</p>
+            <input autofocus autocomplete="off" class="form-control mx-auto w-auto" name="cposse" placeholder="Ball Possession" required type="number">
+            <p class="pb-2">Insert a a number from 0 to 100</p>
+            <input autofocus autocomplete="off" class="form-control mx-auto w-auto" name="ccolor" placeholder="Crest Color" required type="text">
+            <p class="pb-2">Insert a 6 digit hex number</p>
+
+            <button type="submit" class="btn btn-dark m-3">Create Team</button>
+    </form>
+
+    <script>
+        $("p").css("color", "dimgrey")
+    </script>
+{% endblock %}

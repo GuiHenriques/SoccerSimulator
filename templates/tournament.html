@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Tournament
+{% endblock %}
+
+{% block main %}
+    <form action="/tournament" method="post">
+            <select name="tour-type">
+                <option disabled selected>Select Tournament</option>
+                <option value="Premier League">Premier League</option>
+                <option value="Bundesliga">Bundesliga</option>
+                <option value="Ligue 1">Ligue 1</option>
+                <option value="LaLiga">LaLiga</option>
+                <option value="Serie A">Serie A</option>
+                <option value="teamsbr">Brasileirão</option>
+                <option value="teamsint">World Cup</option>
+            </select>
+            <button type="submit" class="btn btn-dark m-5">Simulate Tournament</button>
+    </form>
+    <script>
+        // $('select').find(:selected).value
+    </script>
+
+{% endblock %}

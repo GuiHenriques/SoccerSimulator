@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+    My Teams
+{% endblock %}
+
+{% block main %}
+<div class="header">
+    My Teams
+</div>
+<table class="table mx-auto">
+    <theader>
+        <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Rating</th>
+            <th>Color</th>
+            <th>Edit</th>
+        </tr>
+    </theader>
+    <tbody>
+        {% for team in cteams %}
+        <tr>
+            <td>{{loop.index}}</td>
+            <td>{{team.Team}}</td>
+            <td>{{team.Rating}}</td>
+            <td><span class="logo-xsm" style="background-color:{{team.color}}"></span></td>
+            <td>
+                <form action="/delete" method="post">
+                    <input type="hidden" value="{{team.team_id}}" name="id">
+                    <button class="btn btn-secondary">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

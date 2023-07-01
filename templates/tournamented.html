@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Tournament
+{% endblock %}
+
+{% block main %}
+    <table class="table mx-auto table-bordered" style="width: 40%">
+        <thead>
+            <tr>
+                <th scope="col">Rank</th>
+                <th></th>
+                <th scope="col">Team</th>
+                <th scope="col">Win Probability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for team in teams %}
+                <tr>
+                    <th>{{loop.index}}</th>
+                    <td style="column-width: 28px;"><span class="logo-xsm" style="background-color:{{team.color}}"></span></td>
+                    <td>{{team.Team}}</td>
+                    <td>{{(team.Rating|float / sum * 100)|round(2)}}%</td>
+                    <!-- <td>{{team.Rating}}</td> -->
+                </tr>
+                {% endfor %}
+            </tr>
+    </table>
+{% endblock %}

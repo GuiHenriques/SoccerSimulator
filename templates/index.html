@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Quick Match
+{% endblock %}
+
+{% block main%}
+    <div class="header">
+        Quick Match
+    </div>
+    <div class="container section">
+        <div class="row justify-content-evenly team-name" style="padding-bottom:35px">
+            <div class="col" id="team-name-display1">
+                Team 1
+            </div>
+            <div class="col"></div>
+            <div class="col" id="team-name-display2">
+                Team 2
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col" id="team-logo1">
+                <span class="logo1"></span>
+            </div>
+
+            <div class="col team-name" style="margin:auto;">Vs</div>
+
+            <div class="col" id="team-logo2">
+                <span class="logo2"></span>
+            </div>
+        </div>
+    </div>
+
+    <form autocomplete="off" action="/match" method="post">
+
+        <!--Match Settings-->
+        <div class="container section">
+            <div class="row">
+                <h4>Match Settings</h4>
+            </div>
+
+            <div class="row" >
+                <div class="col-sm" style="padding:20px">
+                    <select class="form-select" name="team-type" id="team-type">
+                        <option value="" selected disabled>Team Type</option>
+                        <option value="teams">European Club</option>
+                        <option value="teamsbr">Brazilian Club</option>
+                        <option value="teamsint">International Club</option>
+                    </select>
+                </div>
+
+                <div class="col-sm" style="padding:20px">
+                    <select class="form-select" name="match-type">
+                        <option selected disabled>Match Type</option>
+                        <option value="single">League Match</option>
+                        <option value="double">Cup Match</option>
+                        <option value="double">Friendly Match</option>
+                    </select>
+                </div>
+
+                <div class="col-sm">
+                    <div class="form-check" style="padding:20px">
+                        <label><input class="form-check-input" name="home-advantage" type="checkbox" value="home-advantage" id="home-advantage">Home Advantage</label>
+                    </div>
+                </div>
+            </div><!--row-->
+        </div><!--container-->
+
+        <div class="container section">
+            <div class="row">
+                <div class="col-sm">
+                    <h4>Home Team</h4>
+                </div>
+                <div class="col-sm">
+                    <h4>Away Team</h4>
+                </div>
+            </div>
+
+                <!-- First Input -->
+                <div class="row">
+                    <div class="col-sm">
+                        <input autocomplete="off" class="form-control w-auto mx-auto m-3" id="input1" placeholder="Search Home Team" type="text">
+                    </div>
+
+                    <!--Second Input-->
+                    <div class="col-sm">
+                        <input autocomplete="off" class="form-control w-auto mx-auto m-3" id="input2" placeholder="Search Away Team" type="text">
+                    </div>
+               </div>
+
+               <!-- First Dropdown -->
+                <div class="row">
+                    <div class="col-sm">
+                        <select name="team-name1" id="dropdown1">
+                            <option disabled selected>Select Team</option>
+                            {% for cteam in cteams %}
+                                <option name="team" color="{{cteam.color}}" value="{{cteam.Team}}">{{cteam.Team}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+                    <!-- Second Drodown-->
+                    <div class="col-sm">
+                        <div class="col-sm">
+                            <select name="team-name2" id="dropdown2">
+                                <option disabled selected>Select Team</option>
+                                {% if session["user_id"] %}
+                                    {% for cteam in cteams %}
+                                        <option name="team" color="{{cteam.color}}" value="{{cteam.Team}}">{{cteam.Team}}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-dark m-3">Simulate Match</button>
+    </form>
+
+    <script>
+        //Change Team1
+        let display1 = document.querySelector('#team-name-display1');
+        let drop1 = document.querySelector('#dropdown1');
+        drop1.addEventListener('click', async function() {
+            var team = $('#dropdown1').find(":selected").text();
+            if (team != "Select Team") {
+                display1.innerHTML = team;
+
+                //Change Crest1 Color
+                var color1 = $('#dropdown1').find(":selected").attr('color');
+                document.querySelector('.logo1').style.backgroundColor = color1;
+            }});
+
+        //Change Team2
+        let display2 = document.querySelector('#team-name-display2');
+        let drop2 = document.querySelector('#dropdown2');
+        drop2.addEventListener('click', async function() {
+            var team = $('#dropdown2').find(":selected").text();
+            if (team != "Select Team") {
+                display2.innerHTML = team;
+
+                //Change Crest2 Color
+                var color2 = $('#dropdown2').find(":selected").attr('color');
+                document.querySelector('.logo2').style.backgroundColor = color2;
+            }});
+
+        //Fill Filter Dropdowns
+        let input1 = document.querySelector('#input1');
+        input1.addEventListener('input', async function() {
+            let type = $('#team-type').find(":selected").attr('value')
+            let response = await fetch('/search?q=' + input1.value + '&t=' + type);
+            let teams = await response.text();
+            document.querySelector('#dropdown1').innerHTML = teams;
+        });
+
+        let input2 = document.querySelector('#input2');
+        input2.addEventListener('input', async function() {
+            let type = $('#team-type').find(":selected").attr('value')
+            let response = await fetch('/search?q=' + input2.value + '&t=' + type);
+            let teams = await response.text();
+            document.querySelector('#dropdown2').innerHTML = teams;
+        });
+
+        // Change select options
+        let selectType = document.querySelector('#team-type');
+        selectType.addEventListener('click', async function() {
+            let type = $('#team-type').find(":selected").attr('value')
+            if (type != "") {
+                let response = await fetch('/change?t=' + type)
+                let teams = await response.text();
+                document.querySelector('#dropdown1').innerHTML = teams;
+                document.querySelector('#dropdown2').innerHTML = teams;
+
+                // Clear previous selections
+                const sleep = ms => new Promise(r => setTimeout(r, ms));
+                await sleep(500);
+                document.querySelector('.logo1').style.backgroundColor = 'dimGrey';
+                document.querySelector('.logo2').style.backgroundColor = 'dimGrey';
+                display1.innerHTML = "Team 1";
+                display2.innerHTML = "Team 2";
+        }});
+
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Apology
+{% endblock %}
+
+{% block main %}
+<h1 class="m-3">Apology</h1>
+<div class="alert alert-danger m-5 mx-auto w-auto" role="alert"n style="font-size:17px">
+  {{message}}
+</div>
+<p class="fixed-bottom m-5">
+    <a href="/login">Log in</a> | <a href="/register">Register</a> | <a href="/">Quick Match</a>
+</p>
+{% endblock %}

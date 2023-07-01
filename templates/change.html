@@ -1,0 +1,7 @@
+    <option disabled selected>Select Team</option>
+    {% for team in teams %}
+        <option name="team" color="{{team.color}}" value="{{team.Team}}">{{ team.Team }}</option>
+    {% endfor %}
+    {% for team in cteams %}
+        <option name="team" color="{{team.color}}" value="{{team.Team}}">{{ team.Team }}</option>
+    {% endfor %}
