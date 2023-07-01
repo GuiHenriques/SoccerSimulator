@@ -8,7 +8,12 @@ The user can choose between European, Brazilian, and International teams, simula
 
 ## Deployment
 
-To deploy this project run
+To run locally, clone the repository and install the dependencies:
+
+```bash
+  pip install -r requirements.txt
+```
+Then, run the application:
 
 ```bash
   flask run
